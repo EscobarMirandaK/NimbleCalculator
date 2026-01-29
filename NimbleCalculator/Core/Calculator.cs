@@ -10,6 +10,11 @@
             var parts = input.Split(',','\n');
             var numbers = parts.Select(ParseNumber).ToList();
 
+            if (numbers.Any(n => n < 0))
+            {
+                throw new ArgumentException($"Negative numbers are not allowed: {string.Join(", ", numbers.Where(n => n < 0).Select(n => n.ToString()))}");
+            }
+
             return numbers.Sum();
         }
 

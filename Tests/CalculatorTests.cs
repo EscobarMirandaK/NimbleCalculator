@@ -79,5 +79,14 @@ namespace Tests
             var result = calculator.Add(input);
             Assert.Equal(6, result);
         }
+
+        [Fact]
+        public void NegativeNumbers_ThrowsException()
+        {
+            var calculator = new Calculator();
+            var input = "4,-3,-7,2";
+            var exception = Assert.Throws<ArgumentException>(() => calculator.Add(input));
+            Assert.Equal("Negative numbers are not allowed: -3, -7", exception.Message);
+        }
     }
 }

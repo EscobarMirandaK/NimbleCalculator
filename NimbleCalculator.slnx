@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="NimbleCalculator/NimbleCalculator.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+</Solution>

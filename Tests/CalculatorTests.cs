@@ -9,9 +9,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "20";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
 
             Assert.Equal(20, result);
+            Assert.Equal("20 = 20", formula);
         }
 
         [Fact]
@@ -19,9 +20,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
 
             Assert.Equal(0, result);
+            Assert.Equal("0 = 0", formula);
         }
 
         [Fact]
@@ -29,8 +31,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "5,tytyt";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(5, result);
+            Assert.Equal("5 + 0 = 5", formula);
         }
 
         [Fact]
@@ -38,8 +42,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "1,2,3,4,5,6,7,8,9,10,11,12";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(78, result);
+            Assert.Equal("1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 = 78", formula);
         }
 
         [Fact]
@@ -47,8 +53,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "1\n2";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(3, result);
+            Assert.Equal("1 + 2 = 3", formula);
         }
 
         [Fact]
@@ -56,8 +64,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "1\n2,3";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(6, result);
+            Assert.Equal("1 + 2 + 3 = 6", formula);
         }
 
         [Fact]
@@ -74,8 +84,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "2,1001,6";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(8, result);
+            Assert.Equal("2 + 0 + 6 = 8", formula);
         }
 
         [Fact]
@@ -83,8 +95,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "//#\n2#5";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(7, result);
+            Assert.Equal("2 + 5 = 7", formula);
         }
 
         [Fact]
@@ -101,8 +115,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "//[***]\n11***22***33";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(66, result);
+            Assert.Equal("11 + 22 + 33 = 66", formula);
         }
 
         [Fact]
@@ -110,8 +126,10 @@ namespace Tests
         {
             var calculator = new Calculator();
             var input = "//[*][!!][r9r]\n11r9r22*hh*33!!44";
-            var result = calculator.Add(input);
+            (int result, string formula) = calculator.Add(input);
+
             Assert.Equal(110, result);
+            Assert.Equal("11 + 22 + 0 + 33 + 44 = 110", formula);
         }
     }
 }

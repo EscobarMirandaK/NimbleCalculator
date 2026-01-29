@@ -5,10 +5,10 @@ namespace NimbleCalculator.Core
 {
     public class Calculator
     {
-        public int Add(string input)
+        public (int, string) Add(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
-                return 0;
+                return (0, "0 = 0");
 
             (List<string> delimiters, string numbersPart) = GetDelimiterAndInput(input);
 
@@ -20,7 +20,10 @@ namespace NimbleCalculator.Core
                 throw new ArgumentException($"Negative numbers are not allowed: {string.Join(", ", numbers.Where(n => n < 0).Select(n => n.ToString()))}");
             }
 
-            return numbers.Sum();
+            var result = numbers.Sum();
+            var formula = $"{string.Join(" + ", numbers)} = {result}";
+
+            return (result, formula);
         }
 
         private static (List<string>, string) GetDelimiterAndInput(string input)

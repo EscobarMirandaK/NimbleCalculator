@@ -61,5 +61,23 @@ namespace Tests
             var result = calculator.Add(input);
             Assert.Equal(78, result);
         }
+
+        [Fact]
+        public void NewlineDelimiter_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "1\n2";
+            var result = calculator.Add(input);
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void MixedDelimiters_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "1\n2,3";
+            var result = calculator.Add(input);
+            Assert.Equal(6, result);
+        }
     }
 }

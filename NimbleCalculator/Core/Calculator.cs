@@ -7,7 +7,7 @@
             if (string.IsNullOrWhiteSpace(input))
                 return 0;
 
-            var parts = input.Split(',');
+            var parts = input.Split(',','\n');
             var numbers = parts.Select(ParseNumber).ToList();
 
             return numbers.Sum();

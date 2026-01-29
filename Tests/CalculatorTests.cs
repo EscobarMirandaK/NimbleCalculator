@@ -88,5 +88,14 @@ namespace Tests
             var exception = Assert.Throws<ArgumentException>(() => calculator.Add(input));
             Assert.Equal("Negative numbers are not allowed: -3, -7", exception.Message);
         }
+
+        [Fact]
+        public void NumbersGreaterThan1000_IgnoredInSum()
+        {
+            var calculator = new Calculator();
+            var input = "2,1001,6";
+            var result = calculator.Add(input);
+            Assert.Equal(8, result);
+        }
     }
 }

@@ -20,7 +20,12 @@
 
         private int ParseNumber(string value)
         {
-            return int.TryParse(value, out var number) ? number : 0;
+            if (int.TryParse(value, out var number))
+            {
+                return number > 1000 ? 0 : number;
+            }
+
+            return 0;
         }
     }
 }

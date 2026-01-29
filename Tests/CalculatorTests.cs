@@ -5,14 +5,6 @@ namespace Tests
     public class CalculatorTests
     {
         [Fact]
-        public void MoreThanTwoParameters_ThrowsException()
-        {
-            var calculator = new Calculator();
-            var input = "1,2,3";
-            Assert.Throws<InvalidOperationException>(() => calculator.Add(input));
-        }
-
-        [Fact]
         public void OneParameter_ReturnsSameNumber()
         {
             var calculator = new Calculator();
@@ -59,6 +51,15 @@ namespace Tests
             var input = "5,tytyt";
             var result = calculator.Add(input);
             Assert.Equal(5, result);
+        }
+
+        [Fact]
+        public void MultipleNumbers_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "1,2,3,4,5,6,7,8,9,10,11,12";
+            var result = calculator.Add(input);
+            Assert.Equal(78, result);
         }
     }
 }

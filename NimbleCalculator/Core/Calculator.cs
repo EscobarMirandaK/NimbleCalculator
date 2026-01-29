@@ -8,10 +8,6 @@
                 return 0;
 
             var parts = input.Split(',');
-
-            if (parts.Length > 2)
-                throw new InvalidOperationException("Maximum of 2 numbers allowed");
-
             var numbers = parts.Select(ParseNumber).ToList();
 
             return numbers.Sum();

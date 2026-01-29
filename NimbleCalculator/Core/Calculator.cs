@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace NimbleCalculator.Core
 {
@@ -9,9 +10,9 @@ namespace NimbleCalculator.Core
             if (string.IsNullOrWhiteSpace(input))
                 return 0;
 
-            (string customDelimiter, string numbersPart) = GetDelimiterAndInput(input);
+            (List<string> delimiters, string numbersPart) = GetDelimiterAndInput(input);
 
-            var parts = numbersPart.Split(new string[] { ",", "\n", customDelimiter }, StringSplitOptions.None).ToList();
+            var parts = numbersPart.Split(delimiters.ToArray(), StringSplitOptions.None).ToList();
             var numbers = parts.Select(ParseNumber).ToList();
 
             if (numbers.Any(n => n < 0))
@@ -22,18 +23,19 @@ namespace NimbleCalculator.Core
             return numbers.Sum();
         }
 
-        private static (string, string) GetDelimiterAndInput(string input)
+        private static (List<string>, string) GetDelimiterAndInput(string input)
         {
-            var customDelimiter = ",";
+            var delimiters = new List<string> { ",", "\n" };
             var numbersPart = input;
 
-            if (input.StartsWith("//"))
+            if (input.StartsWith("//") && !input.StartsWith("//["))
             {
                 var delimiterEndIndex = input.IndexOf('\n');
                 if (delimiterEndIndex != -1)
                 {
-                    customDelimiter = input.Substring(2, delimiterEndIndex - 2);
+                    var customDelimiter = input.Substring(2, delimiterEndIndex - 2);
                     numbersPart = input.Substring(delimiterEndIndex + 1);
+                    delimiters.Add(customDelimiter);
                 }
             }
 
@@ -42,12 +44,18 @@ namespace NimbleCalculator.Core
                 var delimiterEndIndex = input.IndexOf("]\n");
                 if (delimiterEndIndex != -1)
                 {
-                    customDelimiter = input.Substring(3, delimiterEndIndex - 3);
+                    var matches = Regex.Matches(input, @"\[(.*?)\]");
+
+                    var customDelimiters = matches
+                        .Select(m => m.Groups[1].Value)
+                        .ToList();
+
+                    delimiters.AddRange(customDelimiters);
                     numbersPart = input.Substring(delimiterEndIndex + 2);
                 }
             }
 
-            return (customDelimiter, numbersPart);
+            return (delimiters, numbersPart);
         }
 
         private int ParseNumber(string value)

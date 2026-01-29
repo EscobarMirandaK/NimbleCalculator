@@ -104,5 +104,14 @@ namespace Tests
             var result = calculator.Add(input);
             Assert.Equal(66, result);
         }
+
+        [Fact]
+        public void MultipleCustomDelimiter_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "//[*][!!][r9r]\n11r9r22*hh*33!!44";
+            var result = calculator.Add(input);
+            Assert.Equal(110, result);
+        }
     }
 }

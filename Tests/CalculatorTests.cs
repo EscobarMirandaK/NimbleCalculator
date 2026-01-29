@@ -95,5 +95,14 @@ namespace Tests
             var exception = Assert.Throws<ArgumentException>(() => calculator.Add(input));
             Assert.Equal("Negative numbers are not allowed: -3, -1", exception.Message);
         }
+
+        [Fact]
+        public void CustomDelimiterOfAnyLength_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "//[***]\n11***22***33";
+            var result = calculator.Add(input);
+            Assert.Equal(66, result);
+        }
     }
 }

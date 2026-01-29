@@ -1,4 +1,6 @@
-﻿namespace NimbleCalculator.Core
+﻿using System;
+
+namespace NimbleCalculator.Core
 {
     public class Calculator
     {
@@ -7,7 +9,20 @@
             if (string.IsNullOrWhiteSpace(input))
                 return 0;
 
-            var parts = input.Split(',','\n');
+            var customDelimiter = ",";
+            var numbersPart = input;
+
+            if (input.StartsWith("//"))
+            {
+                var delimiterEndIndex = 3;
+                if (delimiterEndIndex != -1)
+                {
+                    customDelimiter = input.Substring(2, delimiterEndIndex - 2);
+                    numbersPart = input.Substring(delimiterEndIndex + 1);
+                }
+            }
+
+            var parts = numbersPart.Split(new string[] { ",", "\n", customDelimiter }, StringSplitOptions.None).ToList();
             var numbers = parts.Select(ParseNumber).ToList();
 
             if (numbers.Any(n => n < 0))

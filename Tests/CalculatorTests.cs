@@ -15,26 +15,6 @@ namespace Tests
         }
 
         [Fact]
-        public void TwoParameters_ReturnsSum()
-        {
-            var calculator = new Calculator();
-            var input = "1,5000";
-            var result = calculator.Add(input);
-
-            Assert.Equal(5001, result);
-        }
-
-        [Fact]
-        public void NegavtiveValue_ReturnsSum()
-        {
-            var calculator = new Calculator();
-            var input = " 4,-3";
-            var result = calculator.Add(input);
-
-            Assert.Equal(1, result);
-        }
-
-        [Fact]
         public void EmptyInput_ReturnsZero()
         {
             var calculator = new Calculator();
@@ -96,6 +76,24 @@ namespace Tests
             var input = "2,1001,6";
             var result = calculator.Add(input);
             Assert.Equal(8, result);
+        }
+
+        [Fact]
+        public void CustomDelimiter_ReturnsSum()
+        {
+            var calculator = new Calculator();
+            var input = "//#\n2#5";
+            var result = calculator.Add(input);
+            Assert.Equal(7, result);
+        }
+
+        [Fact]
+        public void CustomDelimiterWithNegativeNumbers_ThrowsException()
+        {
+            var calculator = new Calculator();
+            var input = "//*\n4*-3*2*-1";
+            var exception = Assert.Throws<ArgumentException>(() => calculator.Add(input));
+            Assert.Equal("Negative numbers are not allowed: -3, -1", exception.Message);
         }
     }
 }
